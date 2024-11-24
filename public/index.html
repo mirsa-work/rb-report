@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV to PDF Report Generator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px 40px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #0073e6;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            padding: 6px;
+        }
+
+        fieldset {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        legend {
+            font-weight: bold;
+            font-size: 18px;
+            padding: 0 10px;
+            color: #0073e6;
+        }
+
+        .stock-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stock-row label {
+            flex: 1;
+        }
+
+        .stock-row input {
+            flex: 2;
+        }
+
+        button.generate-btn {
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button.generate-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button.generate-btn:hover:not(:disabled) {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>CSV to PDF Report Generator</h1>
+        <form>
+            <label for="businessLocation">Select Business Location:</label>
+            <select id="businessLocation">
+                <option value="">-- Select Location --</option>
+                <option value="al_nazr">AL NAZR HABSHAN</option>
+                <option value="al_mariah">AL MARIAH RUWAIZ</option>
+            </select>
+
+            <label for="csvFile">Upload your CSV file:</label>
+            <input type="file" id="csvFile" accept=".csv" disabled />
+
+            <fieldset class="stock-details">
+                <legend>Stock Details</legend>
+                <div class="stock-row">
+                    <label for="openingStock">Opening Stock:</label>
+                    <input type="text" id="openingStock" placeholder="Enter Opening Stock" />
+                </div>
+                <div class="stock-row">
+                    <label for="stockIn">Stock In:</label>
+                    <input type="text" id="stockIn" placeholder="Enter Stock In" />
+                </div>
+                <div class="stock-row">
+                    <label for="closingStock">Closing Stock:</label>
+                    <input type="text" id="closingStock" placeholder="Enter Closing Stock" />
+                </div>
+            </fieldset>
+
+            <button type="button" onclick="processFile()" class="generate-btn" disabled>Generate PDF Report</button>
+        </form>
+        <div id="output" style="margin-top: 20px;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
