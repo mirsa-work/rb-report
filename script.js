@@ -53,10 +53,6 @@ const locationMappings = {
                 },
                 align: 'right'
             }
-        ],
-        groupHeaders: [
-            { title: 'Mandays', from: 2, to: 5 }, // Columns 2-5 under "Mandays"
-            { title: 'Parcel Count', from: 6, to: 9 } // Columns 6-9 under "Parcel Count"
         ]
     },
     al_mariah: {
@@ -116,10 +112,6 @@ const locationMappings = {
                 calculate: (row) => parseFloat(row['CF.Cost %'] || 0).toFixed(2),
                 align: 'right'
             }
-        ],
-        groupHeaders: [
-            { title: 'Mandays', from: 2, to: 5 }, // Columns 2-5 under "Mandays"
-            { title: 'Parcel Count', from: 6, to: 9 } // Columns 6-9 under "Parcel Count"
         ]
     }
 };
