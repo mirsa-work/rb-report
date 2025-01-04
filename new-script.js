@@ -49,8 +49,8 @@ function createTableConfig() {
             createColumn(7, 'Parcel Count Juniors', record => record.parcelCount.junior, true),
             createColumn(8, 'Parcel Count Labours', record => record.parcelCount.labour, true),
             createColumn(9, 'Total Parcel Count', record => record.parcelCount.senior + record.parcelCount.junior + record.parcelCount.labour, true),
-            createColumn(10, 'Consumption', record => record.consumption.toFixed(2), true, { align: 'right' }),
-            createColumn(11, 'Total Revenue', calculateTotalRevenue, true, { align: 'right' }),
+            createColumn(10, 'Consumption', record => formatNumber(record.consumption), true, { align: 'right' }),
+            createColumn(11, 'Total Revenue', calculateAndFormatTotalRevenue, true, { align: 'right' }),
             createColumn(12, 'Cost/Manday', calculateCostPerManday),
             createColumn(13, 'Cost%', calculateCostPercentage)
         ]
@@ -59,6 +59,11 @@ function createTableConfig() {
 
 function createColumn(pos, label, valueFunc, calculateTotal = false, style = {}) {
     return { pos, label, value: valueFunc, calculateTotal, style };
+}
+
+function calculateAndFormatTotalRevenue(record, locationKey) {
+    const revenue = calculateTotalRevenue(record, locationKey);
+    return formatNumber(revenue);
 }
 
 function calculateTotalRevenue(record, locationKey) {
@@ -189,6 +194,20 @@ function formatDate(date) {
     return date.toISOString().split('T')[0];
 }
 
+function formatNumber(num) {
+    return parseFloat(num).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function parseFormattedNumber(numStr) {
+    console.log('numStr ', numStr);
+    // Remove commas and other non-numeric characters except for the decimal point and negative sign
+    const cleanNumStr = String(numStr).replace(/[^0-9.-]+/g, '');
+    return parseFloat(cleanNumStr);
+}
+
 function generatePDF(locationKey) {
     const locationConfig = config.locations[locationKey];
     const records = locationConfig.records;
@@ -292,7 +311,8 @@ function prepareMainTableData(records, locationKey, columnSettings) {
     totalsRow[0] = 'TOTAL'; // Label for totals row
     columnSettings.forEach((col, index) => {
         if (col.calculateTotal) {
-            totalsRow[index] = tableData.reduce((sum, row) => sum + parseFloat(row[index] || 0), 0).toFixed(2);
+            let sum = tableData.reduce((sum, row) => sum + parseFormattedNumber(row[index] || 0), 0).toFixed(2);
+            totalsRow[index] = formatNumber(sum);
         }
     });
     tableData.push(totalsRow);
