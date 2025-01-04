@@ -72,19 +72,18 @@
             color: #0073e6;
         }
 
-        .form-row {
+        .stock-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            margin-bottom: 20px;
         }
 
-        .form-row label {
+        .stock-row label {
             flex: 1;
         }
 
-        .form-row input {
+        .stock-row input {
             flex: 2;
         }
 
@@ -113,26 +112,40 @@
     <div class="container">
         <h1>CSV to PDF Report Generator</h1>
         <form>
+            <label for="businessLocation">Select Business Location:</label>
+            <select id="businessLocation">
+                <option value="">-- Select Location --</option>
+                <option value="al_nazr">AL NAZR HABSHAN</option>
+                <option value="al_mariah">AL MARIAH RUWAIZ</option>
+            </select>
 
             <label for="csvFile">Upload your CSV file:</label>
-            <input type="file" id="csvFile" accept=".csv" />
+            <input type="file" id="csvFile" accept=".csv" disabled />
 
-            <fieldset>
-                <legend>Details</legend>
-                <div class="form-row">
-                    <label for="companyName">Company name:</label>
-                    <input type="text" id="companyName" placeholder="Enter Company name" />
+            <fieldset class="stock-details">
+                <legend>Stock Details</legend>
+                <div class="stock-row">
+                    <label for="openingStock">Opening Stock:</label>
+                    <input type="text" id="openingStock" placeholder="Enter Opening Stock" />
+                </div>
+                <div class="stock-row">
+                    <label for="stockIn">Stock In:</label>
+                    <input type="text" id="stockIn" placeholder="Enter Stock In" />
+                </div>
+                <div class="stock-row">
+                    <label for="closingStock">Closing Stock:</label>
+                    <input type="text" id="closingStock" placeholder="Enter Closing Stock" />
                 </div>
             </fieldset>
 
-            <button type="button" onclick="processFile()" class="generate-btn">Generate PDF Report</button>
+            <button type="button" onclick="processFile()" class="generate-btn" disabled>Generate PDF Report</button>
         </form>
         <div id="output" style="margin-top: 20px;"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-    <script src="new-script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
